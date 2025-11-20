@@ -1,299 +1,66 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Key Generator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #f5576c;
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 0.95em;
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .generate-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-            margin-bottom: 20px;
-        }
-
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
-        }
-
-        .generate-btn:active {
-            transform: translateY(0);
-        }
-
-        .output-section {
-            margin-top: 20px;
-        }
-
-        .output-section label {
-            display: block;
-            color: #f5576c;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 0.95em;
-        }
-
-        .api-key-display {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ffc0cb;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            resize: vertical;
-            min-height: 100px;
-            background: #fff5f7;
-            color: #333;
-            transition: border-color 0.3s ease;
-        }
-
-        .api-key-display:focus {
-            outline: none;
-            border-color: #f5576c;
-            background: white;
-        }
-
-        .copy-btn {
-            width: 100%;
-            padding: 12px;
-            background: white;
-            color: #f5576c;
-            border: 2px solid #f5576c;
-            border-radius: 10px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .copy-btn:hover {
-            background: #f5576c;
-            color: white;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateX(400px);
-            transition: all 0.3s ease;
-        }
-
-        .notification.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Tambahan styling untuk form user */
-        .user-form {
-            margin-bottom: 18px;
-        }
-
-        .user-form label {
-            display: block;
-            color: #f5576c;
-            font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 0.95em;
-        }
-
-        .user-form input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ffc0cb;
-            border-radius: 10px;
-            font-size: 0.95em;
-            margin-bottom: 10px;
-            background: #fff5f7;
-            transition: border-color 0.2s ease;
-        }
-
-        .user-form input:focus {
-            outline: none;
-            border-color: #f5576c;
-            background: white;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>User Register - API Key Generator</title>
+  <style>
+    /* (pakai css yang sudah kamu punya; supaya ringkas saya hanya cantumkan struktur) */
+    body { font-family: sans-serif; padding: 20px; background: #fafafa; }
+    .container { max-width:700px; margin:0 auto; background:white;padding:24px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+    input, textarea, button { width:100%; padding:10px; margin-top:8px; border-radius:8px; border:1px solid #eee }
+    .row { display:flex; gap:10px }
+    .row input { flex:1 }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>API Key Generator</h1>
-            <p>Buat API key unik untuk aplikasi Anda</p>
-        </div>
+  <div class="container">
+    <h2>Daftar User & Generate API Key</h2>
+    <div>
+      <label>Nama Depan</label>
+      <input id="firstName" />
+      <label>Nama Belakang</label>
+      <input id="lastName" />
+      <label>Email</label>
+      <input id="email" />
+      <div class="row">
+        <button id="generateBtn" onclick="generatePreview()">Generate Key</button>
+        <button id="saveBtn" onclick="saveUserAndApiKey()">Simpan data user dan API key</button>
+      </div>
 
-        <!-- FORM INPUT USER -->
-        <div class="user-form" id="userForm">
-            <label for="firstName">Nama Depan</label>
-            <input id="firstName" type="text" placeholder="Masukkan nama depan" />
-
-            <label for="lastName">Nama Belakang</label>
-            <input id="lastName" type="text" placeholder="Masukkan nama belakang" />
-
-            <label for="email">Email</label>
-            <input id="email" type="email" placeholder="contoh@domain.com" />
-        </div>
-
-        <!-- Tombol menyimpan data user + generate API key -->
-        <button class="generate-btn" onclick="saveUserAndApiKey()">
-            💾 Simpan data user dan api key
-        </button>
-
-        <div class="output-section">
-            <label for="apiKeyOutput">Your API Key:</label>
-            <textarea 
-                id="apiKeyOutput" 
-                class="api-key-display" 
-                placeholder="Klik tombol di atas untuk generate API key..."
-                readonly
-            ></textarea>
-            <button class="copy-btn" onclick="copyToClipboard()">
-                📋 Copy to Clipboard
-            </button>
-        </div>
+      <label>Hasil API Key</label>
+      <textarea id="apiKeyOutput" readonly placeholder="Klik Generate..."></textarea>
     </div>
+  </div>
 
-    <div class="notification" id="notification">API Key berhasil disalin!</div>
+  <script>
+    // hanya generate preview lokal dulu, actual key dibuat di server pada save (POST /create-user)
+    function generatePreview() {
+      // buat string sementara - tapi final key akan dibuat di server saat simpan
+      const preview = 'preview-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10)
+      document.getElementById('apiKeyOutput').value = preview + '\n(Klik "Simpan data user dan API key" untuk menyimpan & membuat key yang valid di server.)'
+    }
 
-    <script>
-        // fungsi simpan user + request create API key
-        async function saveUserAndApiKey() {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-
-            if (!firstName || !lastName || !email) {
-                alert('Silakan isi semua field: nama depan, nama belakang, dan email.');
-                return;
-            }
-
-            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRe.test(email)) {
-                alert('Format email tidak valid.');
-                return;
-            }
-
-            try {
-                const response = await fetch('/create', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ firstName, lastName, email })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Server error: ' + response.status);
-                }
-
-                const data = await response.json();
-                if (data && data.apiKey) {
-                    document.getElementById('apiKeyOutput').value = data.apiKey;
-                    alert('Data user dan API Key berhasil disimpan.');
-                } else {
-                    alert('Gagal membuat API Key: ' + (data?.message || 'Unknown error'));
-                }
-            } catch (err) {
-                console.error(err);
-                alert('Error: ' + err.message);
-            }
-        }
-
-        function copyToClipboard() {
-            const apiKeyText = document.getElementById('apiKeyOutput');
-            if (!apiKeyText.value) {
-                alert('Belum ada API key yang di-generate!');
-                return;
-            }
-
-            apiKeyText.select();
-            document.execCommand('copy');
-
-            const notification = document.getElementById('notification');
-            notification.classList.add('show');
-            setTimeout(() => notification.classList.remove('show'), 2000);
-        }
-    </script>
+    async function saveUserAndApiKey() {
+      const firstName = document.getElementById('firstName').value.trim()
+      const lastName = document.getElementById('lastName').value.trim()
+      const email = document.getElementById('email').value.trim()
+      if (!firstName || !lastName || !email) return alert('Isi semua field')
+      try {
+        const res = await fetch('/create-user', {
+          method:'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ firstName, lastName, email })
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.message || 'Gagal')
+        document.getElementById('apiKeyOutput').value = data.data.apiKey
+        alert('User & API key tersimpan')
+      } catch (err) {
+        console.error(err)
+        alert('Error: '+err.message)
+      }
+    }
+  </script>
 </body>
 </html>
