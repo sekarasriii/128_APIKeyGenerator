@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Admin Dashboard</title>
+  <style>
+    table { width:100%; border-collapse:collapse }
+    th,td { border:1px solid #ddd; padding:8px }
+  </style>
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+<button onclick="logout()">Logout</button>
+
+<table id="tbl">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First</th>
+      <th>Last</th>
+      <th>Email</th>
+      <th>API Key</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+const token = localStorage.getItem('admin_token');
+if(!token) {
+  alert('Anda belum login');
+  location.href='/admin-login.html';
+}
+
+async function load() {
+  const res = await fetch('/admin/dashboard', {
+    headers: { Authorization: 'Bearer '+token }
+  });
+
+  const d = await res.json();
+  if(!res.ok){
+    alert('Error: ' + (d.message || JSON.stringify(d)));
+    if(res.status === 401) location.href='/admin-login.html';
+    return;
+  }
+
+  const tbody = document.querySelector('#tbl tbody');
+  tbody.innerHTML = '';
+
+  d.users.forEach(u => {
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${u.user_id}</td>
+      <td>${u.first_name || ''}</td>
+      <td>${u.last_name || ''}</td>
+      <td>${u.email || ''}</td>
+      <td style="font-family:monospace; max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+        ${u.api_key || ''}
+      </td>
+      <td>${u.status}</td>
+      <td><button onclick="del(${u.user_id})">Delete</button></td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+async function del(id) {
+  if(!confirm('Hapus user id '+id+' ?')) return;
+
+  const res = await fetch('/admin/user/' + id, {
+    method: 'DELETE',
+    headers: { Authorization:'Bearer '+token }
+  });
+
+  const d = await res.json();
+  if(res.ok){
+    alert('Deleted');
+    load();
+  } else {
+    alert('Error: ' + (d.message || JSON.stringify(d)));
+  }
+}
+
+function logout(){
+  localStorage.removeItem('admin_token');
+  location.href='/admin-login.html';
+}
+
+load();
+</script>
+
+</body>
+</html>
