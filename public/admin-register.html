@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Admin Register</title>
+</head>
+<body>
+
+  <h2>Admin Register</h2>
+
+  <label>Email</label><br>
+  <input id="email" type="email"/><br><br>
+
+  <label>Password</label><br>
+  <input id="password" type="password"/><br><br>
+
+  <button id="btnReg">Register</button>
+
+  <p><a href="/admin-login.html">Sudah punya akun? Login</a></p>
+
+<script>
+async function register(){
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  if(!email || !password){
+    alert("Email & password wajib diisi");
+    return;
+  }
+
+  const res = await fetch('/admin/register', {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+
+  const d = await res.json();
+
+  if(res.ok){
+    alert("Berhasil register!");
+    window.location.href = "/admin-login.html";
+  } else {
+    alert("Error: " + (d.message || JSON.stringify(d)));
+  }
+}
+
+document.getElementById("btnReg").addEventListener("click", register);
+</script>
+
+</body>
+</html>
+
