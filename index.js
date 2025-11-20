@@ -346,7 +346,7 @@ app.post('/checkapi', async (req, res) => {
 
 /* ---------- Serve root ---------- */
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'landing.html'))
+  res.sendFile(path.join(__dirname, 'public', 'home.html'))
 })
 
 process.on('SIGTERM', async () => {

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Halaman Utama — API Key Manager</title>
+  <style>
+    body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:#f5f7fb;margin:0;padding:40px;display:flex;align-items:center;justify-content:center;height:100vh}
+    .card{background:#fff;padding:28px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.08);width:520px;max-width:94%}
+    h1{margin:0 0 12px;color:#1f2937}
+    p.small{color:#6b7280;margin-top:0;margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    button{padding:12px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-weight:600}
+    button.primary{background:#3b82f6;color:#fff;border-color:#3b82f6}
+    button.warn{background:#ef4444;color:#fff;border-color:#ef4444}
+    .full{grid-column:1/-1}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>API Key Manager — Halaman Utama</h1>
+    <p class="small">Pilih aksi di bawah:</p>
+
+    <div class="grid">
+      <button onclick="go('/admin-login.html')">Admin Login</button>
+      <button onclick="go('/admin-register.html')">Admin Register</button>
+      <button onclick="go('/admin-dashboard.html')">Admin Dashboard</button>
+      <button onclick="go('/index.html')" class="primary">User Register & Generate Key</button>
+
+      <button class="full" onclick="openDocs()">Dokumentasi / Info</button>
+    </div>
+  </div>
+
+<script>
+function go(path){ window.location.href = path }
+function openDocs(){ alert('Halaman-halaman:\n- Admin Login: /admin-login.html\n- Admin Register: /admin-register.html\n- Admin Dashboard: /admin-dashboard.html\n- User Register: /index.html') }
+</script>
+</body>
+</html>
